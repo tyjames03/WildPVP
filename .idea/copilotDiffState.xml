@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/src/main/java/me/tyjam/wildpvp/WildPVP.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/me/tyjam/wildpvp/WildPVP.java" />
+              <option name="updatedContent" value="package me.tyjam.wildpvp;&#10;&#10;import org.bukkit.plugin.java.JavaPlugin;&#10;&#10;public class WildPVP extends JavaPlugin {&#10;    private static WildPVP instance;&#10;&#10;    @Override&#10;    public void onEnable() {&#10;        instance = this;&#10;        this.getCommand(&quot;wildpvp&quot;).setExecutor(new WildPVPCommand());&#10;        getServer().getPluginManager().registerEvents(new WildPVPListener(), this);&#10;    }&#10;&#10;    public static WildPVP getInstance() {&#10;        return instance;&#10;    }&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/me/tyjam/wildpvp/WildPVPCommand.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/me/tyjam/wildpvp/WildPVPCommand.java" />
+              <option name="updatedContent" value="package me.tyjam.wildpvp;&#10;&#10;import org.bukkit.command.Command;&#10;import org.bukkit.command.CommandExecutor;&#10;import org.bukkit.command.CommandSender;&#10;import org.bukkit.entity.Player;&#10;&#10;public class WildPVPCommand implements CommandExecutor {&#10;    @Override&#10;    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {&#10;        if (!(sender instanceof Player)) return true;&#10;        Player player = (Player) sender;&#10;        WildPVPQueueGUI.open(player);&#10;        return true;&#10;    }&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/me/tyjam/wildpvp/WildPVPQueue.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/me/tyjam/wildpvp/WildPVPQueue.java" />
+              <option name="updatedContent" value="package me.tyjam.wildpvp;&#10;&#10;import java.util.ArrayList;&#10;import java.util.Collections;&#10;import java.util.List;&#10;import java.util.UUID;&#10;&#10;public class WildPVPQueue {&#10;    private static final List&lt;UUID&gt; queue = new ArrayList&lt;&gt;();&#10;&#10;    public static List&lt;UUID&gt; getQueue() {&#10;        return Collections.unmodifiableList(queue);&#10;    }&#10;&#10;    public static boolean isQueued(UUID uuid) {&#10;        return queue.contains(uuid);&#10;    }&#10;&#10;    public static void add(UUID uuid) {&#10;        if (!queue.contains(uuid)) queue.add(uuid);&#10;    }&#10;&#10;    public static void remove(UUID uuid) {&#10;        queue.remove(uuid);&#10;    }&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/me/tyjam/wildpvp/WildPVPQueueGUI.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/me/tyjam/wildpvp/WildPVPQueueGUI.java" />
+              <option name="updatedContent" value="package me.tyjam.wildpvp;&#10;&#10;import org.bukkit.Bukkit;&#10;import org.bukkit.Material;&#10;import org.bukkit.entity.Player;&#10;import org.bukkit.inventory.Inventory;&#10;import org.bukkit.inventory.ItemStack;&#10;import org.bukkit.inventory.meta.ItemMeta;&#10;import org.bukkit.inventory.meta.SkullMeta;&#10;&#10;import java.util.List;&#10;import java.util.UUID;&#10;import java.util.stream.Collectors;&#10;&#10;public class WildPVPQueueGUI {&#10;    public static void open(Player player) {&#10;        Inventory gui = Bukkit.createInventory(null, 9, &quot;WildPVP Queue&quot;);&#10;        List&lt;UUID&gt; queue = WildPVPQueue.getQueue();&#10;        int i = 0;&#10;        for (UUID uuid : queue) {&#10;            if (i &gt;= 8) break;&#10;            Player p = Bukkit.getPlayer(uuid);&#10;            if (p == null) continue;&#10;            ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);&#10;            SkullMeta meta = (SkullMeta) skull.getItemMeta();&#10;            meta.setOwningPlayer(p);&#10;            meta.setDisplayName(p.getName() + (p.equals(player) ? &quot; (You)&quot; : &quot;&quot;));&#10;            skull.setItemMeta(meta);&#10;            gui.setItem(i, skull);&#10;            i++;&#10;        }&#10;        // Join/Leave button&#10;        ItemStack joinItem = new ItemStack(Material.EMERALD_BLOCK);&#10;        ItemMeta joinMeta = joinItem.getItemMeta();&#10;        if (queue.contains(player.getUniqueId())) {&#10;            joinMeta.setDisplayName(&quot;§cLeave Queue&quot;);&#10;        } else {&#10;            joinMeta.setDisplayName(&quot;§aJoin Queue&quot;);&#10;        }&#10;        joinItem.setItemMeta(joinMeta);&#10;        gui.setItem(8, joinItem);&#10;&#10;        player.openInventory(gui);&#10;    }&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/resources/plugin.yml">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/resources/plugin.yml" />
+              <option name="originalContent" value="name: WildPVP&#10;version: '1.0-SNAPSHOT'&#10;main: org.tyjames03.wildPVP.WildPVP&#10;api-version: '1.21'&#10;authors: [ tyjames03 ]&#10;" />
+              <option name="updatedContent" value="name: WildPVP&#10;version: 1.0&#10;main: me.tyjam.wildpvp.WildPVP&#10;api-version: 1.16&#10;commands:&#10;  wildpvp:&#10;    description: Open the WildPVP queue GUI" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

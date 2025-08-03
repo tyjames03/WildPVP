@@ -1,0 +1,7 @@
+name: WildPVP
+version: 1.0
+main: me.tyjam.wildpvp.WildPVP
+api-version: 1.16
+commands:
+  wildpvp:
+    description: Open the WildPVP queue GUI
